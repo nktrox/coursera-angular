@@ -3,22 +3,27 @@
 
   var x=10;
 
-  angular.module('myFirstApp',[])
+  angular.module('myFirstApp',[]).controller('DIController', DIController);
 
-  .controller('nameController', function ($scope) {
+  DIController.$inject = ['$scope','$filter'];
+
+  function DIController($scope,$filter) {
     $scope.name = "";
+
     $scope.totalValue = 0;
     $scope.displayNumeric = function () {
+      var upCase = $filter('uppercase');
+      $scope.name = upCase($scope.name);
       $scope.totalValue = calculateNumericForString($scope.name);
     };
-  });
+  }
 
 function calculateNumericForString (string) {
-  var totalStringValue = 0;
-  for (var i=0;i<string.length; i++) {
-    totalStringValue+=string.charCodeAt(i);
+    var totalStringValue = 0;
+    for (var i=0;i<string.length; i++) {
+      totalStringValue+=string.charCodeAt(i);
+    }
+    return totalStringValue;
   }
-  return totalStringValue;
-};
 
 })();
